@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo N5 Hiragana Practice</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <!-- 1. WELCOME & NAME INPUT SCREEN -->
+    <div class="screen active" id="welcome-screen">
+        <h1 class="welcome-title">HIRAGANA TO ROMAJI PRACTICE</h1>
+        <div class="welcome-subtitle">Japanese Vocabulary Quiz</div>
+        
+        <!-- Romaji Refresher Box -->
+        <div class="refresher-card">
+            <h2>💡 What is Romaji?</h2>
+            <p><strong>Romaji</strong> (ローマ字) is the representation of Japanese sounds using the Roman/Latin alphabet (the standard English alphabet).</p>
+            <p class="example-text"><strong>Example:</strong> For the Hiragana word <strong>「ねこ」</strong>, you would type <strong>neko</strong> (cat).</p>
+        </div>
+
+        <div class="instructions-card">
+            <h2>Instructions</h2>
+            <ul class="instructions-list">
+                <li>Look at the displayed <strong>HIRAGANA</strong> word and English meaning.</li>
+                <li>Type the matching <strong>ROMAJI</strong> spelling into the box.</li>
+                <li>You have <strong>1 minute (60s)</strong> per word for full points (10 pts).</li>
+                <li>Answering after the 1-minute timer expires grants <strong>5 points</strong>.</li>
+                <li>Each wrong guess deducts <strong>1 point</strong> from your score!</li>
+            </ul>
+        </div>
+
+        <div class="name-input-group">
+            <label for="user-name-input">Your Full Name:</label>
+            <input type="text" id="user-name-input" placeholder="Enter your full name..." required>
+        </div>
+
+        <button class="start-btn" onclick="startPractice()">Start Practice ➔</button>
+    </div>
+
+    <!-- 2. MAIN PRACTICE SCREEN -->
+    <div class="screen" id="practice-screen">
+        <div class="header">
+            <h1>Hiragana Practice</h1>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="stats">
+                <span id="word-count">Word: 0 / 50</span>
+                <span class="timer-badge" id="timer-display">Time Left: 60s</span>
+                <span id="score">Score: 0</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="hiragana-display-text" id="vocab-hiragana">---</div>
+            <div class="english-meaning" id="vocab-meaning">---</div>
+        </div>
+
+        <form class="input-section" onsubmit="handleFormSubmit(event)">
+            <div class="input-wrapper">
+                <input 
+                    type="text" 
+                    id="romaji-input" 
+                    class="romaji-input" 
+                    placeholder="Type Romaji here..." 
+                    autocomplete="off"
+                >
+                <button type="submit" id="submit-btn" class="submit-btn">Check</button>
+            </div>
+            <div class="error-message" id="error-message"></div>
+        </form>
+
+        <div class="feedback-overlay" id="feedback-overlay">
+            <div class="feedback-title" id="feedback-title">CORRECT! 🎉</div>
+            <div class="feedback-sub" id="feedback-msg">Great job!</div>
+            <button class="next-btn" id="next-btn" onclick="nextWord()">Next Word ➔</button>
+        </div>
+    </div>
+
+    <!-- 3. WEBCAM VERIFICATION SCREEN -->
+    <div class="screen" id="camera-screen">
+        <h1 class="welcome-title">Photo Verification</h1>
+        <div class="welcome-subtitle">Please take a quick photo to personalize your certificate.</div>
+        
+        <div class="webcam-box">
+            <video id="webcam-video" autoplay playsinline></video>
+            <canvas id="photo-canvas" style="display:none;"></canvas>
+            <img id="captured-photo" alt="Your Photo" style="display:none;">
+        </div>
+
+        <div class="camera-actions">
+            <button class="start-btn" id="snap-btn" onclick="takeSnapshot()">📷 Take Photo</button>
+            <button class="start-btn" id="retake-btn" onclick="resetCamera()" style="display:none; background: #666;">Retake Photo</button>
+            <button class="start-btn" id="cert-btn" onclick="showCertificate()" style="display:none; background: var(--primary-green);">Get Certificate ➔</button>
+        </div>
+    </div>
+
+    <!-- 4. CERTIFICATE SCREEN -->
+    <div class="screen" id="certificate-screen">
+        <div class="certificate" id="certificate">
+            <div class="cert-border">
+                <div class="cert-header">CERTIFICATE OF COMPLETION</div>
+                <div class="cert-subtitle">Japanese N5 Hiragana Mastery</div>
+                
+                <div class="cert-body">
+                    This certifies that
+                    <div class="cert-name" id="cert-user-name">[ Name Here ]</div>
+                    has successfully completed the
+                    <div class="cert-title">Nihongo N5 Hiragana to Romaji Practice</div>
+                </div>
+
+                <div class="cert-details">
+                    <div><strong>Score:</strong> <span id="cert-score">0</span> pts</div>
+                    <div><strong>Total Time Taken:</strong> <span id="cert-total-time">00m 00s</span></div>
+                </div>
+
+                <div class="cert-footer">
+                    <div><strong>Date:</strong> <span id="cert-date">2026-08-10</span></div>
+                    <div><strong>Status:</strong> Verified Completion</div>
+                </div>
+            </div>
+        </div>
+        <button class="start-btn" onclick="window.print()" style="margin-top: 20px;">🖨️ Print / Save PDF</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
